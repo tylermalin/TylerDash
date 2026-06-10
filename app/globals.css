@@ -344,3 +344,121 @@ a {
   outline: 2px solid var(--moss);
   outline-offset: 2px;
 }
+
+/* v2 modules */
+.progress {
+  margin-top: 10px;
+  height: 4px;
+  border-radius: 2px;
+  background: var(--hairline);
+  overflow: hidden;
+}
+
+.progress-fill {
+  height: 100%;
+  background: var(--moss);
+  border-radius: 2px;
+}
+
+.metric-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+  gap: 12px;
+  margin-top: 24px;
+}
+
+.metric-card {
+  background: var(--paper-raised);
+  border: 1px solid var(--hairline);
+  border-radius: 10px;
+  padding: 14px 16px;
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.metric-card .metric-value {
+  font-family: var(--font-display), serif;
+  font-size: 24px;
+  font-weight: 500;
+  color: var(--moss-deep);
+}
+
+.metric-card.pending .metric-value {
+  color: var(--ink-faint);
+}
+
+.metric-card .metric-label {
+  font-family: var(--font-mono), monospace;
+  font-size: 10px;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--ink-faint);
+}
+
+.chips {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-top: 18px;
+}
+
+.chip {
+  font-family: var(--font-mono), monospace;
+  font-size: 11px;
+  letter-spacing: 0.05em;
+  color: var(--moss-deep);
+  text-decoration: none;
+  border: 1px solid var(--hairline);
+  border-radius: 999px;
+  padding: 5px 12px;
+  background: var(--paper-raised);
+  transition: border-color 0.15s ease;
+}
+
+.chip:hover,
+.chip:focus-visible {
+  border-color: var(--moss);
+}
+
+.agenda {
+  margin-top: 22px;
+}
+
+.agenda-list {
+  border-top: 1px solid var(--hairline);
+}
+
+.agenda-row {
+  display: flex;
+  gap: 14px;
+  align-items: baseline;
+  padding: 8px 0;
+  border-bottom: 1px solid var(--hairline);
+  font-size: 14px;
+}
+
+.agenda-when {
+  flex: none;
+  width: 132px;
+  font-family: var(--font-mono), monospace;
+  font-size: 11px;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  color: var(--moss-deep);
+}
+
+.agenda-when em {
+  font-style: normal;
+  color: var(--ink-faint);
+}
+
+.agenda-what {
+  color: var(--ink-soft);
+}
+
+.content .li a {
+  color: var(--moss-deep);
+  text-decoration: none;
+  border-bottom: 1px solid var(--hairline);
+}

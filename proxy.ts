@@ -5,7 +5,7 @@ import type { NextRequest } from "next/server";
 // (user: tyler). If unset, the site stays open but renders only the
 // setup card, since NOTION_TOKEN setup happens at the same time.
 
-export function middleware(req: NextRequest) {
+export function proxy(req: NextRequest) {
   const password = process.env.DASHBOARD_PASSWORD;
   if (!password) return NextResponse.next();
 

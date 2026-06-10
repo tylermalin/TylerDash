@@ -1,6 +1,14 @@
-import Link from "next/link";
-import { fetchPage, PAGES } from "@/lib/notion";
-import { Telemetry, Blocks, SetupCard, Colophon } from "./components";
+import { fetchPage, fetchDomainSummary, getDomains } from "@/lib/notion";
+import { fetchAgenda } from "@/lib/agenda";
+import {
+  Telemetry,
+  Blocks,
+  DomainCards,
+  Agenda,
+  SetupCard,
+  Colophon,
+  LinkChips,
+} from "./components";
 
 export const dynamic = "force-dynamic";
 
@@ -14,10 +22,36 @@ function today(): string {
 }
 
 export default async function Home() {
-  const [dash, malama, beneficial] = await Promise.all([
-    fetchPage(PAGES.dashboard.id),
-    fetchPage(PAGES.malama.id),
-    fetchPage(PAGES.beneficial.id),
+  const tree = await getDomains();
+
+  if (tree.error) {
+    const empty = await fetchPage("none").catch(() => null);
+    return (
+      <main className="shell">
+        <header className="masthead">
+          <span className="wordmark">OS</span>
+          <span className="masthead-date">{today()}</span>
+        </header>
+        <div className="telemetry">
+          <span className="pulse down" aria-hidden />
+          <span>Dashboard</span>
+          <span className="sep">/</span>
+          <span>sync down</span>
+          <span className="sep">/</span>
+          <span>{tree.error === "NO_TOKEN" ? "awaiting setup" : tree.error}</span>
+        </div>
+        <SetupCard error={tree.error} />
+        <Colophon />
+      </main>
+    );
+  }
+
+  const [dash, agenda, ...summaries] = await Promise.all([
+    tree.dashboardId
+      ? fetchPage(tree.dashboardId)
+      : Promise.resolve(null),
+    fetchAgenda(),
+    ...tree.domains.map((d) => fetchDomainSummary(d)),
   ]);
 
   return (
@@ -27,33 +61,14 @@ export default async function Home() {
         <span className="masthead-date">{today()}</span>
       </header>
 
-      <Telemetry data={dash} label="Dashboard" />
+      {dash && <Telemetry data={dash} label="Dashboard" />}
 
-      {dash.error ? <SetupCard error={dash.error} /> : <Blocks blocks={dash.blocks} />}
+      <Agenda events={agenda} />
 
-      <section className="domains">
-        <p className="domains-label">Domains</p>
-        <div className="domain-grid">
-          {[
-            { page: PAGES.malama, data: malama },
-            { page: PAGES.beneficial, data: beneficial },
-          ].map(({ page, data }) => (
-            <Link className="domain-card" href={`/d/${page.slug}`} key={page.slug}>
-              <span className="name">{page.title}</span>
-              <span className="stat">
-                {data.error ? (
-                  "awaiting sync"
-                ) : (
-                  <>
-                    <strong>{data.openCount} open</strong>
-                    {data.updated ? ` · upd ${data.updated}` : ""}
-                  </>
-                )}
-              </span>
-            </Link>
-          ))}
-        </div>
-      </section>
+      {dash && <LinkChips links={dash.links} />}
+      {dash && <Blocks blocks={dash.blocks} />}
+
+      <DomainCards domains={summaries} />
 
       <Colophon />
     </main>
