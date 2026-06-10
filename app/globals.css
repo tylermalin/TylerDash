@@ -1,0 +1,346 @@
+:root {
+  --paper: #f5f7f2;
+  --paper-raised: #fcfdfb;
+  --ink: #1b211c;
+  --ink-soft: #4d564f;
+  --ink-faint: #8a948c;
+  --moss: #3e6b4f;
+  --moss-deep: #2c4e39;
+  --ember: #c25e40;
+  --hairline: #dde3db;
+  --done: #9aa79d;
+}
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html {
+  background: var(--paper);
+}
+
+body {
+  font-family: var(--font-body), system-ui, sans-serif;
+  color: var(--ink);
+  background: var(--paper);
+  line-height: 1.55;
+  -webkit-font-smoothing: antialiased;
+}
+
+a {
+  color: inherit;
+}
+
+.shell {
+  max-width: 760px;
+  margin: 0 auto;
+  padding: 28px 20px 80px;
+}
+
+/* Masthead */
+.masthead {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  padding-bottom: 14px;
+}
+
+.wordmark {
+  font-family: var(--font-display), serif;
+  font-size: 26px;
+  font-weight: 500;
+  letter-spacing: 0.01em;
+}
+
+.wordmark a {
+  text-decoration: none;
+}
+
+.masthead-date {
+  font-family: var(--font-mono), monospace;
+  font-size: 11px;
+  color: var(--ink-faint);
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+/* Telemetry strip: the one signature element. State, measured. */
+.telemetry {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  flex-wrap: wrap;
+  border-top: 1px solid var(--ink);
+  border-bottom: 1px solid var(--hairline);
+  padding: 9px 0;
+  font-family: var(--font-mono), monospace;
+  font-size: 11px;
+  letter-spacing: 0.07em;
+  text-transform: uppercase;
+  color: var(--ink-soft);
+}
+
+.telemetry .pulse {
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: var(--moss);
+  animation: pulse 2.4s ease-in-out infinite;
+}
+
+.telemetry .pulse.down {
+  background: var(--ember);
+  animation: none;
+}
+
+@keyframes pulse {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.35; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .telemetry .pulse { animation: none; }
+}
+
+.telemetry .sep {
+  color: var(--hairline);
+}
+
+.telemetry .open-count {
+  color: var(--moss-deep);
+  font-weight: 600;
+}
+
+/* Content blocks */
+.content {
+  padding-top: 26px;
+}
+
+.content .h1 {
+  font-family: var(--font-display), serif;
+  font-size: 22px;
+  font-weight: 500;
+  margin: 34px 0 10px;
+  letter-spacing: 0.005em;
+}
+
+.content .h1:first-child {
+  margin-top: 0;
+}
+
+.content .h2 {
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--moss-deep);
+  margin: 24px 0 8px;
+}
+
+.content .h3 {
+  font-size: 14px;
+  font-weight: 600;
+  margin: 16px 0 6px;
+}
+
+.content .p {
+  font-size: 15px;
+  color: var(--ink-soft);
+  margin: 6px 0;
+  max-width: 62ch;
+}
+
+.content .p.meta {
+  font-family: var(--font-mono), monospace;
+  font-size: 12px;
+  color: var(--ink-faint);
+}
+
+.content .li {
+  font-size: 15px;
+  color: var(--ink-soft);
+  margin: 4px 0 4px 4px;
+  padding-left: 16px;
+  position: relative;
+}
+
+.content .li::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  top: 0.62em;
+  width: 6px;
+  height: 1px;
+  background: var(--ink-faint);
+}
+
+.content .divider {
+  border: none;
+  border-top: 1px solid var(--hairline);
+  margin: 24px 0;
+}
+
+/* To-dos */
+.todo {
+  display: flex;
+  gap: 12px;
+  align-items: flex-start;
+  padding: 9px 0;
+  border-bottom: 1px solid var(--hairline);
+  font-size: 15px;
+}
+
+.todo .box {
+  flex: none;
+  width: 15px;
+  height: 15px;
+  margin-top: 4px;
+  border: 1.5px solid var(--moss);
+  border-radius: 3px;
+}
+
+.todo.done .box {
+  background: var(--done);
+  border-color: var(--done);
+}
+
+.todo.done .label {
+  color: var(--done);
+  text-decoration: line-through;
+}
+
+/* Domain cards */
+.domains {
+  margin-top: 44px;
+  border-top: 1px solid var(--ink);
+  padding-top: 18px;
+}
+
+.domains-label {
+  font-family: var(--font-mono), monospace;
+  font-size: 11px;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--ink-faint);
+  margin-bottom: 12px;
+}
+
+.domain-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 12px;
+}
+
+@media (max-width: 540px) {
+  .domain-grid { grid-template-columns: 1fr; }
+}
+
+.domain-card {
+  display: block;
+  text-decoration: none;
+  background: var(--paper-raised);
+  border: 1px solid var(--hairline);
+  border-radius: 10px;
+  padding: 16px 18px;
+  transition: border-color 0.15s ease;
+}
+
+.domain-card:hover,
+.domain-card:focus-visible {
+  border-color: var(--moss);
+}
+
+.domain-card .name {
+  font-family: var(--font-display), serif;
+  font-size: 17px;
+  font-weight: 500;
+}
+
+.domain-card .stat {
+  font-family: var(--font-mono), monospace;
+  font-size: 11px;
+  letter-spacing: 0.07em;
+  text-transform: uppercase;
+  color: var(--ink-faint);
+  margin-top: 5px;
+}
+
+.domain-card .stat strong {
+  color: var(--moss-deep);
+}
+
+/* Footer */
+.colophon {
+  margin-top: 56px;
+  padding-top: 14px;
+  border-top: 1px solid var(--hairline);
+  font-family: var(--font-mono), monospace;
+  font-size: 11px;
+  letter-spacing: 0.05em;
+  color: var(--ink-faint);
+  display: flex;
+  justify-content: space-between;
+  gap: 12px;
+  flex-wrap: wrap;
+}
+
+.colophon a {
+  color: var(--moss-deep);
+  text-decoration: none;
+  border-bottom: 1px solid var(--hairline);
+}
+
+/* Setup state */
+.setup {
+  margin-top: 26px;
+  background: var(--paper-raised);
+  border: 1px solid var(--hairline);
+  border-left: 3px solid var(--ember);
+  border-radius: 8px;
+  padding: 22px 24px;
+}
+
+.setup h2 {
+  font-family: var(--font-display), serif;
+  font-size: 19px;
+  font-weight: 500;
+  margin-bottom: 10px;
+}
+
+.setup ol {
+  margin: 10px 0 0 18px;
+  font-size: 14px;
+  color: var(--ink-soft);
+}
+
+.setup li {
+  margin: 8px 0;
+}
+
+.setup code {
+  font-family: var(--font-mono), monospace;
+  font-size: 12.5px;
+  background: var(--paper);
+  border: 1px solid var(--hairline);
+  border-radius: 4px;
+  padding: 1px 5px;
+}
+
+/* Back link on domain pages */
+.backlink {
+  display: inline-block;
+  font-family: var(--font-mono), monospace;
+  font-size: 11px;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--moss-deep);
+  text-decoration: none;
+  margin-bottom: 18px;
+}
+
+:focus-visible {
+  outline: 2px solid var(--moss);
+  outline-offset: 2px;
+}
